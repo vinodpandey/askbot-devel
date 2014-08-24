@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.compat import AUTH_USER_MODEL
 
 
 class Migration(SchemaMigration):
@@ -11,7 +12,7 @@ class Migration(SchemaMigration):
         # Adding model 'LastVisitTime'
         db.create_table('group_messaging_lastvisittime', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
             ('message', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['group_messaging.Message'])),
             ('at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
@@ -49,7 +50,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        'auth.user': {
+        AUTH_USER_MODEL: {
             'Meta': {'object_name': 'User'},
             'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'avatar_type': ('django.db.models.fields.CharField', [], {'default': "'n'", 'max_length': '1'}),
@@ -106,7 +107,7 @@ class Migration(SchemaMigration):
             'at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'message': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['group_messaging.Message']"}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
         },
         'group_messaging.message': {
             'Meta': {'object_name': 'Message'},
@@ -119,7 +120,7 @@ class Migration(SchemaMigration):
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'children'", 'null': 'True', 'to': "orm['group_messaging.Message']"}),
             'recipients': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False'}),
             'root': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'descendants'", 'null': 'True', 'to': "orm['group_messaging.Message']"}),
-            'sender': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sent_messages'", 'to': "orm['auth.User']"}),
+            'sender': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sent_messages'", 'to': "orm[AUTH_USER_MODEL]"}),
             'senders_info': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '64'}),
             'sent_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'text': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'})
@@ -129,13 +130,13 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'message': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['group_messaging.Message']"}),
             'status': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
         },
         'group_messaging.senderlist': {
             'Meta': {'object_name': 'SenderList'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'recipient': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.Group']", 'unique': 'True'}),
-            'senders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'symmetrical': 'False'})
+            'senders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm[AUTH_USER_MODEL]", 'symmetrical': 'False'})
         }
     }
 

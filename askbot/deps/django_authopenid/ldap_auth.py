@@ -1,6 +1,6 @@
 import logging
 from django.conf import settings as django_settings
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.forms import EmailField, ValidationError
 from askbot.conf import settings as askbot_settings
 from askbot.deps.django_authopenid.models import UserAssociation

@@ -3,7 +3,7 @@ import random
 import string
 import logging
 from django.db import models
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.utils.translation import ugettext as _
 from askbot.models.post import Post
 from askbot.models.base import BaseQuerySetManager

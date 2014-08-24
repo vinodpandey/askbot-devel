@@ -5,7 +5,7 @@ from django.db import models
 from django.db.backends.dummy.base import IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.contrib.auth.models import Group as AuthGroup
 from django.core import exceptions
 from django.forms import EmailField, URLField
@@ -392,7 +392,9 @@ class AuthUserGroups(models.Model):
     class Meta:
         app_label = 'auth'
         unique_together = ('group', 'user')
-        db_table = 'auth_user_groups'
+        #change this to the custom user model
+        #db_table = 'auth_user_groups'
+        db_table = 'django_social_auth_user_groups'
         managed = False
 
 

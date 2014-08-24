@@ -1,5 +1,5 @@
 from django.db.models import signals as django_signals
-from django.contrib.auth.models import User
+from askbot.compat import User
 
 from haystack.signals import BaseSignalProcessor
 

@@ -1,6 +1,6 @@
 '''Copied from Django 1.3.1 source code, it will use this model to'''
 from django.db import models
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.utils.translation import ugettext_lazy
 
 class Message(models.Model):

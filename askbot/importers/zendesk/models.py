@@ -1,6 +1,6 @@
 import re
 from django.db import models
-from django.contrib.auth.models import User as DjangoUser
+from askbot.compat import User as DjangoUser
 from django.utils.html import strip_tags
 from askbot.utils.html import unescape
 

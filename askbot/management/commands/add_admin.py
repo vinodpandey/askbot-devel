@@ -1,7 +1,7 @@
 from optparse import make_option
 
 from django.core.management.base import NoArgsCommand
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.db.models.signals import pre_save, post_save
 import sys
 

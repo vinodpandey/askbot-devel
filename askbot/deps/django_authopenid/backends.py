@@ -4,7 +4,7 @@ application
 """
 import datetime
 import logging
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings as django_settings
 from django.utils.translation import ugettext as _

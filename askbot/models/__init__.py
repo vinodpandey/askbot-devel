@@ -1,7 +1,7 @@
 from askbot import startup_procedures
 startup_procedures.run()
 
-from django.contrib.auth.models import User
+from askbot.compat import User
 #set up a possibility for the users to follow others
 try:
     import followit

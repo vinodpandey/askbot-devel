@@ -1,12 +1,14 @@
 import datetime
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
 from askbot import const
 from django.core.urlresolvers import reverse
+from askbot.compat import AUTH_USER_MODEL
+
 
 class VoteManager(models.Manager):
     def get_up_vote_count_from_user(self, user):
@@ -36,7 +38,7 @@ class Vote(models.Model):
         (VOTE_UP,   u'Up'),
         (VOTE_DOWN, u'Down'),
     )
-    user = models.ForeignKey('auth.User', related_name='votes')
+    user = models.ForeignKey(AUTH_USER_MODEL, related_name='votes')
     voted_post = models.ForeignKey('Post', related_name='votes')
 
     vote           = models.SmallIntegerField(choices=VOTE_CHOICES)

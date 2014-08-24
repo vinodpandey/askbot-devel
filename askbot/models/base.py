@@ -1,6 +1,6 @@
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
+from askbot.compat import User
 
 class BaseQuerySetManager(models.Manager):
     """a base class that allows chainable qustom filters

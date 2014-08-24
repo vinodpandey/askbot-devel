@@ -32,7 +32,7 @@
 import logging
 import cgi
 from django import forms
-from django.contrib.auth.models import User
+from askbot.compat import User
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.conf import settings as django_settings

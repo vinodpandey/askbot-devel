@@ -1,3 +1,4 @@
+from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
 import os
 import datetime
@@ -35,7 +36,7 @@ class Migration(SchemaMigration):
             db.create_table(u'vote', (
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
                 ('voted_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='votes', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='votes', to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('vote', self.gf('django.db.models.fields.SmallIntegerField')()),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -51,7 +52,7 @@ class Migration(SchemaMigration):
                 ('flagged_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='flaggeditems', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='flaggeditems', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('forum', ['FlaggedItem'])
 
@@ -65,7 +66,7 @@ class Migration(SchemaMigration):
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='comments', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='comments', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('forum', ['Comment'])
 
@@ -73,8 +74,8 @@ class Migration(SchemaMigration):
             db.create_table(u'tag', (
                 ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_tags', to=orm['auth.User'])),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_tags', null=True, to=orm['auth.User'])),
+                ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_tags', to=orm[AUTH_USER_MODEL])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_tags', null=True, to=orm[AUTH_USER_MODEL])),
                 ('used_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('deleted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -86,7 +87,7 @@ class Migration(SchemaMigration):
                 ('reason', self.gf('django.db.models.fields.CharField')(max_length=16)),
                 ('tag', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_selections', to=orm['forum.Tag'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tag_selections', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tag_selections', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('forum', ['MarkedTag'])
 
@@ -99,28 +100,28 @@ class Migration(SchemaMigration):
                 ('closed_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('deleted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('last_activity_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='last_active_in_questions', to=orm['auth.User'])),
+                ('last_activity_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='last_active_in_questions', to=orm[AUTH_USER_MODEL])),
                 ('view_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('locked_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('score', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questions', to=orm[AUTH_USER_MODEL])),
                 ('comment_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('html', self.gf('django.db.models.fields.TextField')()),
                 ('vote_down_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
                 ('closed', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_questions', null=True, to=orm['auth.User'])),
+                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('favourite_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('summary', self.gf('django.db.models.fields.CharField')(max_length=180)),
                 ('answer_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('last_activity_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('closed_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='closed_questions', null=True, to=orm['auth.User'])),
+                ('closed_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='closed_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('close_reason', self.gf('django.db.models.fields.SmallIntegerField')(null=True, blank=True)),
                 ('locked', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
-                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_questions', null=True, to=orm['auth.User'])),
+                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_questions', null=True, to=orm['auth.User'])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('wikified_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
@@ -131,7 +132,7 @@ class Migration(SchemaMigration):
             db.create_table(u'question_followed_by', (
                 ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
                 ('question', models.ForeignKey(orm['forum.question'], null=False)),
-                ('user', models.ForeignKey(orm['auth.user'], null=False))
+                ('user', models.ForeignKey(orm[AUTH_USER_MODEL], null=False))
             ))
             db.create_unique(u'question_followed_by', ['question_id', 'user_id'])
 
@@ -146,7 +147,7 @@ class Migration(SchemaMigration):
             # Adding model 'QuestionView'
             db.create_table('forum_questionview', (
                 ('when', self.gf('django.db.models.fields.DateTimeField')()),
-                ('who', self.gf('django.db.models.fields.related.ForeignKey')(related_name='question_views', to=orm['auth.User'])),
+                ('who', self.gf('django.db.models.fields.related.ForeignKey')(related_name='question_views', to=orm[AUTH_USER_MODEL])),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='viewed', to=orm['forum.Question'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
@@ -157,13 +158,13 @@ class Migration(SchemaMigration):
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['forum.Question'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_favorite_questions', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_favorite_questions', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('forum', ['FavoriteQuestion'])
 
             # Adding model 'QuestionRevision'
             db.create_table(u'question_revision', (
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questionrevisions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questionrevisions', to=orm[AUTH_USER_MODEL])),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
@@ -179,7 +180,7 @@ class Migration(SchemaMigration):
             db.create_table('forum_anonymousquestion', (
                 ('wiki', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('ip_addr', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL], null=True)),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
@@ -199,19 +200,19 @@ class Migration(SchemaMigration):
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('locked_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('score', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm[AUTH_USER_MODEL])),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm['forum.Question'])),
                 ('comment_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('html', self.gf('django.db.models.fields.TextField')()),
                 ('vote_down_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_answers', null=True, to=orm['auth.User'])),
+                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('accepted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('accepted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('locked', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_answers', null=True, to=orm['auth.User'])),
+                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_answers', null=True, to=orm['auth.User'])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('wikified_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ))
@@ -219,7 +220,7 @@ class Migration(SchemaMigration):
 
             # Adding model 'AnswerRevision'
             db.create_table(u'answer_revision', (
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answerrevisions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answerrevisions', to=orm[AUTH_USER_MODEL])),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('revised_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('summary', self.gf('django.db.models.fields.CharField')(max_length=300, blank=True)),
@@ -233,7 +234,7 @@ class Migration(SchemaMigration):
             db.create_table('forum_anonymousanswer', (
                 ('wiki', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('ip_addr', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL], null=True)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='anonymous_answers', to=orm['forum.Question'])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
@@ -247,7 +248,7 @@ class Migration(SchemaMigration):
             db.create_table(u'activity', (
                 ('is_auditted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('active_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -259,7 +260,7 @@ class Migration(SchemaMigration):
             db.create_table('forum_emailfeedsetting', (
                 ('reported_at', self.gf('django.db.models.fields.DateTimeField')(null=True)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-                ('subscriber', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('subscriber', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('feed_type', self.gf('django.db.models.fields.CharField')(max_length=16)),
                 ('frequency', self.gf('django.db.models.fields.CharField')(default='n', max_length=8)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -273,7 +274,7 @@ class Migration(SchemaMigration):
                 ('expiration', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2010, 4, 25, 13, 14, 41, 581000))),
                 ('type', self.gf('django.db.models.fields.CharField')(max_length=12)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('forum', ['ValidationHash'])
 
@@ -283,7 +284,7 @@ class Migration(SchemaMigration):
             # Adding model 'AuthKeyUserAssociation'
             db.create_table('forum_authkeyuserassociation', (
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='auth_keys', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='auth_keys', to=orm[AUTH_USER_MODEL])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
                 ('provider', self.gf('django.db.models.fields.CharField')(max_length=64)),
@@ -310,7 +311,7 @@ class Migration(SchemaMigration):
                 ('awarded_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('notified', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_user', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_user', to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('badge', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_badge', to=orm['forum.Badge'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -323,7 +324,7 @@ class Migration(SchemaMigration):
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['forum.Question'])),
                 ('negative', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
                 ('reputation_type', self.gf('django.db.models.fields.SmallIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('reputed_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('reputation', self.gf('django.db.models.fields.IntegerField')(default=1)),
@@ -342,7 +343,7 @@ class Migration(SchemaMigration):
                 ('pages', self.gf('django.db.models.fields.SmallIntegerField')()),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('published_at', self.gf('django.db.models.fields.DateTimeField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')()),
             ))
@@ -360,7 +361,7 @@ class Migration(SchemaMigration):
             db.create_table(u'book_author_info', (
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('book', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['forum.Book'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('blog_url', self.gf('django.db.models.fields.CharField')(max_length=255)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')()),
@@ -373,7 +374,7 @@ class Migration(SchemaMigration):
                 ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('book', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['forum.Book'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('rss_created_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
@@ -382,7 +383,7 @@ class Migration(SchemaMigration):
             db.create_table(u'vote', (
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
                 ('voted_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='votes', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='votes', to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('vote', self.gf('django.db.models.fields.SmallIntegerField')()),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -398,7 +399,7 @@ class Migration(SchemaMigration):
                 ('flagged_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='flaggeditems', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='flaggeditems', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('askbot', ['FlaggedItem'])
 
@@ -412,7 +413,7 @@ class Migration(SchemaMigration):
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='comments', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='comments', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('askbot', ['Comment'])
 
@@ -420,8 +421,8 @@ class Migration(SchemaMigration):
             db.create_table(u'tag', (
                 ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_tags', to=orm['auth.User'])),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_tags', null=True, to=orm['auth.User'])),
+                ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='created_tags', to=orm[AUTH_USER_MODEL])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_tags', null=True, to=orm[AUTH_USER_MODEL])),
                 ('used_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('deleted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -433,7 +434,7 @@ class Migration(SchemaMigration):
                 ('reason', self.gf('django.db.models.fields.CharField')(max_length=16)),
                 ('tag', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_selections', to=orm['askbot.Tag'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tag_selections', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tag_selections', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('askbot', ['MarkedTag'])
 
@@ -446,28 +447,28 @@ class Migration(SchemaMigration):
                 ('closed_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('deleted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('last_activity_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='last_active_in_questions', to=orm['auth.User'])),
+                ('last_activity_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='last_active_in_questions', to=orm[AUTH_USER_MODEL])),
                 ('view_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('locked_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('score', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questions', to=orm[AUTH_USER_MODEL])),
                 ('comment_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('html', self.gf('django.db.models.fields.TextField')()),
                 ('vote_down_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
                 ('closed', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_questions', null=True, to=orm['auth.User'])),
+                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('favourite_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('summary', self.gf('django.db.models.fields.CharField')(max_length=180)),
                 ('answer_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('last_activity_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('closed_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='closed_questions', null=True, to=orm['auth.User'])),
+                ('closed_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='closed_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('close_reason', self.gf('django.db.models.fields.SmallIntegerField')(null=True, blank=True)),
                 ('locked', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
-                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_questions', null=True, to=orm['auth.User'])),
+                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_questions', null=True, to=orm['auth.User'])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_questions', null=True, to=orm[AUTH_USER_MODEL])),
                 ('wikified_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
@@ -478,7 +479,7 @@ class Migration(SchemaMigration):
             db.create_table(u'question_followed_by', (
                 ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
                 ('question', models.ForeignKey(orm['askbot.question'], null=False)),
-                ('user', models.ForeignKey(orm['auth.user'], null=False))
+                ('user', models.ForeignKey(orm[AUTH_USER_MODEL], null=False))
             ))
             db.create_unique(u'question_followed_by', ['question_id', 'user_id'])
 
@@ -493,7 +494,7 @@ class Migration(SchemaMigration):
             # Adding model 'QuestionView'
             db.create_table('askbot_questionview', (
                 ('when', self.gf('django.db.models.fields.DateTimeField')()),
-                ('who', self.gf('django.db.models.fields.related.ForeignKey')(related_name='question_views', to=orm['auth.User'])),
+                ('who', self.gf('django.db.models.fields.related.ForeignKey')(related_name='question_views', to=orm[AUTH_USER_MODEL])),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='viewed', to=orm['askbot.Question'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
@@ -504,13 +505,13 @@ class Migration(SchemaMigration):
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Question'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_favorite_questions', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='user_favorite_questions', to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('askbot', ['FavoriteQuestion'])
 
             # Adding model 'QuestionRevision'
             db.create_table(u'question_revision', (
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questionrevisions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='questionrevisions', to=orm[AUTH_USER_MODEL])),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
@@ -526,7 +527,7 @@ class Migration(SchemaMigration):
             db.create_table('askbot_anonymousquestion', (
                 ('wiki', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('ip_addr', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL], null=True)),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
@@ -546,19 +547,19 @@ class Migration(SchemaMigration):
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('locked_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('score', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm[AUTH_USER_MODEL])),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answers', to=orm['askbot.Question'])),
                 ('comment_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
                 ('html', self.gf('django.db.models.fields.TextField')()),
                 ('vote_down_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
-                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_answers', null=True, to=orm['auth.User'])),
+                ('last_edited_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='last_edited_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('accepted_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('accepted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('locked', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
-                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_answers', null=True, to=orm['auth.User'])),
+                ('locked_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='locked_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_answers', null=True, to=orm['auth.User'])),
+                ('deleted_by', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='deleted_answers', null=True, to=orm[AUTH_USER_MODEL])),
                 ('wikified_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
             ))
@@ -566,7 +567,7 @@ class Migration(SchemaMigration):
 
             # Adding model 'AnswerRevision'
             db.create_table(u'answer_revision', (
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answerrevisions', to=orm['auth.User'])),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='answerrevisions', to=orm[AUTH_USER_MODEL])),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('revised_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('summary', self.gf('django.db.models.fields.CharField')(max_length=300, blank=True)),
@@ -580,7 +581,7 @@ class Migration(SchemaMigration):
             db.create_table('askbot_anonymousanswer', (
                 ('wiki', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('ip_addr', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
-                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+                ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL], null=True)),
                 ('text', self.gf('django.db.models.fields.TextField')()),
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='anonymous_answers', to=orm['askbot.Question'])),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
@@ -594,7 +595,7 @@ class Migration(SchemaMigration):
             db.create_table(u'activity', (
                 ('is_auditted', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('active_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -606,7 +607,7 @@ class Migration(SchemaMigration):
             db.create_table('askbot_emailfeedsetting', (
                 ('reported_at', self.gf('django.db.models.fields.DateTimeField')(null=True)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-                ('subscriber', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('subscriber', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('feed_type', self.gf('django.db.models.fields.CharField')(max_length=16)),
                 ('frequency', self.gf('django.db.models.fields.CharField')(default='n', max_length=8)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -620,7 +621,7 @@ class Migration(SchemaMigration):
                 ('expiration', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2010, 4, 25, 13, 14, 41, 581000))),
                 ('type', self.gf('django.db.models.fields.CharField')(max_length=12)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
             ))
             db.send_create_signal('askbot', ['ValidationHash'])
 
@@ -630,7 +631,7 @@ class Migration(SchemaMigration):
             # Adding model 'AuthKeyUserAssociation'
             db.create_table('askbot_authkeyuserassociation', (
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='auth_keys', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='auth_keys', to=orm[AUTH_USER_MODEL])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
                 ('provider', self.gf('django.db.models.fields.CharField')(max_length=64)),
@@ -657,7 +658,7 @@ class Migration(SchemaMigration):
                 ('awarded_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('notified', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True)),
                 ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_user', to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_user', to=orm[AUTH_USER_MODEL])),
                 ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
                 ('badge', self.gf('django.db.models.fields.related.ForeignKey')(related_name='award_badge', to=orm['askbot.Badge'])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -670,7 +671,7 @@ class Migration(SchemaMigration):
                 ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Question'])),
                 ('negative', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
                 ('reputation_type', self.gf('django.db.models.fields.SmallIntegerField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('reputed_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('reputation', self.gf('django.db.models.fields.IntegerField')(default=1)),
@@ -689,7 +690,7 @@ class Migration(SchemaMigration):
                 ('pages', self.gf('django.db.models.fields.SmallIntegerField')()),
                 ('tagnames', self.gf('django.db.models.fields.CharField')(max_length=125)),
                 ('published_at', self.gf('django.db.models.fields.DateTimeField')()),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')()),
             ))
@@ -707,7 +708,7 @@ class Migration(SchemaMigration):
             db.create_table(u'book_author_info', (
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('book', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Book'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('blog_url', self.gf('django.db.models.fields.CharField')(max_length=255)),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
                 ('last_edited_at', self.gf('django.db.models.fields.DateTimeField')()),
@@ -720,7 +721,7 @@ class Migration(SchemaMigration):
                 ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
                 ('added_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('book', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Book'])),
-                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+                ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[AUTH_USER_MODEL])),
                 ('rss_created_at', self.gf('django.db.models.fields.DateTimeField')()),
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
@@ -942,7 +943,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
             },
-            'auth.user': {
+            AUTH_USER_MODEL: {
                 'Meta': {'object_name': 'User'},
                 'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
                 'bronze': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
@@ -989,12 +990,12 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'is_auditted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.anonymousanswer': {
                 'Meta': {'object_name': 'AnonymousAnswer'},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]", 'null': 'True'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'ip_addr': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'anonymous_answers'", 'to': "orm['forum.Question']"}),
@@ -1006,7 +1007,7 @@ class Migration(SchemaMigration):
             'forum.anonymousquestion': {
                 'Meta': {'object_name': 'AnonymousQuestion'},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]", 'null': 'True'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'ip_addr': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
                 'session_key': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
@@ -1021,18 +1022,18 @@ class Migration(SchemaMigration):
                 'accepted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'accepted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'comment_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'html': ('django.db.models.fields.TextField', [], {}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'locked_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'offensive_flag_count': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm['forum.Question']"}),
                 'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
@@ -1044,7 +1045,7 @@ class Migration(SchemaMigration):
             'forum.answerrevision': {
                 'Meta': {'object_name': 'AnswerRevision', 'db_table': "u'answer_revision'"},
                 'answer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['forum.Answer']"}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answerrevisions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answerrevisions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'revised_at': ('django.db.models.fields.DateTimeField', [], {}),
                 'revision': ('django.db.models.fields.PositiveIntegerField', [], {}),
@@ -1057,7 +1058,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
                 'provider': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'auth_keys'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'auth_keys'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.award': {
                 'Meta': {'object_name': 'Award', 'db_table': "u'award'"},
@@ -1067,12 +1068,12 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'notified': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'award_user'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'award_user'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.badge': {
                 'Meta': {'unique_together': "(('name', 'type'),)", 'object_name': 'Badge', 'db_table': "u'badge'"},
                 'awarded_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'awarded_to': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'badges'", 'through': "'Award'", 'to': "orm['auth.User']"}),
+                'awarded_to': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'badges'", 'through': "'Award'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'description': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'multiple': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
@@ -1095,7 +1096,7 @@ class Migration(SchemaMigration):
                 'short_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
                 'tagnames': ('django.db.models.fields.CharField', [], {'max_length': '125'}),
                 'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.bookauthorinfo': {
                 'Meta': {'object_name': 'BookAuthorInfo', 'db_table': "u'book_author_info'"},
@@ -1104,7 +1105,7 @@ class Migration(SchemaMigration):
                 'book': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forum.Book']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.bookauthorrss': {
                 'Meta': {'object_name': 'BookAuthorRss', 'db_table': "u'book_author_rss'"},
@@ -1114,7 +1115,7 @@ class Migration(SchemaMigration):
                 'rss_created_at': ('django.db.models.fields.DateTimeField', [], {}),
                 'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
                 'url': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.comment': {
                 'Meta': {'object_name': 'Comment', 'db_table': "u'comment'"},
@@ -1123,7 +1124,7 @@ class Migration(SchemaMigration):
                 'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'comments'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'comments'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.emailfeedsetting': {
                 'Meta': {'object_name': 'EmailFeedSetting'},
@@ -1132,14 +1133,14 @@ class Migration(SchemaMigration):
                 'frequency': ('django.db.models.fields.CharField', [], {'default': "'n'", 'max_length': '8'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'reported_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-                'subscriber': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'subscriber': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.favoritequestion': {
                 'Meta': {'object_name': 'FavoriteQuestion', 'db_table': "u'favorite_question'"},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['forum.Question']"}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_favorite_questions'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_favorite_questions'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.flaggeditem': {
                 'Meta': {'unique_together': "(('content_type', 'object_id', 'user'),)", 'object_name': 'FlaggedItem', 'db_table': "u'flagged_item'"},
@@ -1147,41 +1148,41 @@ class Migration(SchemaMigration):
                 'flagged_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'flaggeditems'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'flaggeditems'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.markedtag': {
                 'Meta': {'object_name': 'MarkedTag'},
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'reason': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
                 'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_selections'", 'to': "orm['forum.Tag']"}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tag_selections'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tag_selections'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.question': {
                 'Meta': {'object_name': 'Question', 'db_table': "u'question'"},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'answer_accepted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'answer_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'close_reason': ('django.db.models.fields.SmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
                 'closed': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'closed_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'closed_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'closed_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'closed_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'closed_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'comment_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
-                'favorited_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'favorite_questions'", 'through': "'FavoriteQuestion'", 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
+                'favorited_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'favorite_questions'", 'through': "'FavoriteQuestion'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'favourite_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'followed_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'followed_questions'", 'to': "orm['auth.User']"}),
+                'followed_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'followed_questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'html': ('django.db.models.fields.TextField', [], {}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_activity_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'last_activity_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_active_in_questions'", 'to': "orm['auth.User']"}),
+                'last_activity_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_active_in_questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'locked_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'offensive_flag_count': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
                 'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
                 'summary': ('django.db.models.fields.CharField', [], {'max_length': '180'}),
@@ -1196,7 +1197,7 @@ class Migration(SchemaMigration):
             },
             'forum.questionrevision': {
                 'Meta': {'object_name': 'QuestionRevision', 'db_table': "u'question_revision'"},
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questionrevisions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questionrevisions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['forum.Question']"}),
                 'revised_at': ('django.db.models.fields.DateTimeField', [], {}),
@@ -1211,7 +1212,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'viewed'", 'to': "orm['forum.Question']"}),
                 'when': ('django.db.models.fields.DateTimeField', [], {}),
-                'who': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'question_views'", 'to': "orm['auth.User']"})
+                'who': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'question_views'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.repute': {
                 'Meta': {'object_name': 'Repute', 'db_table': "u'repute'"},
@@ -1222,14 +1223,14 @@ class Migration(SchemaMigration):
                 'reputation': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
                 'reputation_type': ('django.db.models.fields.SmallIntegerField', [], {}),
                 'reputed_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.tag': {
                 'Meta': {'object_name': 'Tag', 'db_table': "u'tag'"},
-                'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_tags'", 'to': "orm['auth.User']"}),
+                'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_tags'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_tags'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_tags'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
                 'used_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
@@ -1241,14 +1242,14 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'seed': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
                 'type': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'forum.vote': {
                 'Meta': {'unique_together': "(('content_type', 'object_id', 'user'),)", 'object_name': 'Vote', 'db_table': "u'vote'"},
                 'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm['auth.User']"}),
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'vote': ('django.db.models.fields.SmallIntegerField', [], {}),
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
@@ -1268,7 +1269,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
             },
-            'auth.user': {
+            AUTH_USER_MODEL: {
                 'Meta': {'object_name': 'User'},
                 'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
                 'bronze': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
@@ -1315,12 +1316,12 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'is_auditted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.anonymousanswer': {
                 'Meta': {'object_name': 'AnonymousAnswer'},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]", 'null': 'True'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'ip_addr': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'anonymous_answers'", 'to': "orm['askbot.Question']"}),
@@ -1332,7 +1333,7 @@ class Migration(SchemaMigration):
             'askbot.anonymousquestion': {
                 'Meta': {'object_name': 'AnonymousQuestion'},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]", 'null': 'True'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'ip_addr': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
                 'session_key': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
@@ -1347,18 +1348,18 @@ class Migration(SchemaMigration):
                 'accepted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'accepted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'comment_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'html': ('django.db.models.fields.TextField', [], {}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'locked_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_answers'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_answers'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'offensive_flag_count': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answers'", 'to': "orm['askbot.Question']"}),
                 'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
@@ -1370,7 +1371,7 @@ class Migration(SchemaMigration):
             'askbot.answerrevision': {
                 'Meta': {'object_name': 'AnswerRevision', 'db_table': "u'answer_revision'"},
                 'answer': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['askbot.Answer']"}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answerrevisions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'answerrevisions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'revised_at': ('django.db.models.fields.DateTimeField', [], {}),
                 'revision': ('django.db.models.fields.PositiveIntegerField', [], {}),
@@ -1383,7 +1384,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
                 'provider': ('django.db.models.fields.CharField', [], {'max_length': '64'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'auth_keys'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'auth_keys'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.award': {
                 'Meta': {'object_name': 'Award', 'db_table': "u'award'"},
@@ -1393,12 +1394,12 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'notified': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'award_user'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'award_user'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.badge': {
                 'Meta': {'unique_together': "(('name', 'type'),)", 'object_name': 'Badge', 'db_table': "u'badge'"},
                 'awarded_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'awarded_to': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'badges'", 'through': "'Award'", 'to': "orm['auth.User']"}),
+                'awarded_to': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'badges'", 'through': "'Award'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'description': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'multiple': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
@@ -1421,7 +1422,7 @@ class Migration(SchemaMigration):
                 'short_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
                 'tagnames': ('django.db.models.fields.CharField', [], {'max_length': '125'}),
                 'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.bookauthorinfo': {
                 'Meta': {'object_name': 'BookAuthorInfo', 'db_table': "u'book_author_info'"},
@@ -1430,7 +1431,7 @@ class Migration(SchemaMigration):
                 'book': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['askbot.Book']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.bookauthorrss': {
                 'Meta': {'object_name': 'BookAuthorRss', 'db_table': "u'book_author_rss'"},
@@ -1440,7 +1441,7 @@ class Migration(SchemaMigration):
                 'rss_created_at': ('django.db.models.fields.DateTimeField', [], {}),
                 'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
                 'url': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.comment': {
                 'Meta': {'object_name': 'Comment', 'db_table': "u'comment'"},
@@ -1449,7 +1450,7 @@ class Migration(SchemaMigration):
                 'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'comments'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'comments'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.emailfeedsetting': {
                 'Meta': {'object_name': 'EmailFeedSetting'},
@@ -1458,14 +1459,14 @@ class Migration(SchemaMigration):
                 'frequency': ('django.db.models.fields.CharField', [], {'default': "'n'", 'max_length': '8'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'reported_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-                'subscriber': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'subscriber': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.favoritequestion': {
                 'Meta': {'object_name': 'FavoriteQuestion', 'db_table': "u'favorite_question'"},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['askbot.Question']"}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_favorite_questions'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_favorite_questions'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.flaggeditem': {
                 'Meta': {'unique_together': "(('content_type', 'object_id', 'user'),)", 'object_name': 'FlaggedItem', 'db_table': "u'flagged_item'"},
@@ -1473,41 +1474,41 @@ class Migration(SchemaMigration):
                 'flagged_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'flaggeditems'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'flaggeditems'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.markedtag': {
                 'Meta': {'object_name': 'MarkedTag'},
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'reason': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
                 'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'user_selections'", 'to': "orm['askbot.Tag']"}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tag_selections'", 'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tag_selections'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.question': {
                 'Meta': {'object_name': 'Question', 'db_table': "u'question'"},
                 'added_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
                 'answer_accepted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'answer_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'close_reason': ('django.db.models.fields.SmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
                 'closed': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'closed_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'closed_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'closed_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'closed_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'closed_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'comment_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
-                'favorited_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'favorite_questions'", 'through': "'FavoriteQuestion'", 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
+                'favorited_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'favorite_questions'", 'through': "'FavoriteQuestion'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'favourite_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
-                'followed_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'followed_questions'", 'to': "orm['auth.User']"}),
+                'followed_by': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'followed_questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'html': ('django.db.models.fields.TextField', [], {}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'last_activity_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'last_activity_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_active_in_questions'", 'to': "orm['auth.User']"}),
+                'last_activity_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'last_active_in_questions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'last_edited_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'last_edited_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'last_edited_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'locked': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'locked_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_questions'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'locked_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'locked_questions'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'offensive_flag_count': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
                 'score': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
                 'summary': ('django.db.models.fields.CharField', [], {'max_length': '180'}),
@@ -1522,7 +1523,7 @@ class Migration(SchemaMigration):
             },
             'askbot.questionrevision': {
                 'Meta': {'object_name': 'QuestionRevision', 'db_table': "u'question_revision'"},
-                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questionrevisions'", 'to': "orm['auth.User']"}),
+                'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'questionrevisions'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['askbot.Question']"}),
                 'revised_at': ('django.db.models.fields.DateTimeField', [], {}),
@@ -1537,7 +1538,7 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'question': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'viewed'", 'to': "orm['askbot.Question']"}),
                 'when': ('django.db.models.fields.DateTimeField', [], {}),
-                'who': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'question_views'", 'to': "orm['auth.User']"})
+                'who': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'question_views'", 'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.repute': {
                 'Meta': {'object_name': 'Repute', 'db_table': "u'repute'"},
@@ -1548,14 +1549,14 @@ class Migration(SchemaMigration):
                 'reputation': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
                 'reputation_type': ('django.db.models.fields.SmallIntegerField', [], {}),
                 'reputed_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.tag': {
                 'Meta': {'object_name': 'Tag', 'db_table': "u'tag'"},
-                'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_tags'", 'to': "orm['auth.User']"}),
+                'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_tags'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
                 'deleted_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_tags'", 'null': 'True', 'to': "orm['auth.User']"}),
+                'deleted_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'deleted_tags'", 'null': 'True', 'to': "orm[AUTH_USER_MODEL]"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
                 'used_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
@@ -1567,14 +1568,14 @@ class Migration(SchemaMigration):
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'seed': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
                 'type': ('django.db.models.fields.CharField', [], {'max_length': '12'}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
             },
             'askbot.vote': {
                 'Meta': {'unique_together': "(('content_type', 'object_id', 'user'),)", 'object_name': 'Vote', 'db_table': "u'vote'"},
                 'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
                 'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
                 'object_id': ('django.db.models.fields.PositiveIntegerField', [], {}),
-                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm['auth.User']"}),
+                'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm[AUTH_USER_MODEL]"}),
                 'vote': ('django.db.models.fields.SmallIntegerField', [], {}),
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
