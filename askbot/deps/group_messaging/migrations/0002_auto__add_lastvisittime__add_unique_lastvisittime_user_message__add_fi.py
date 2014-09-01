@@ -3,7 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from askbot.compat import AUTH_USER_MODEL
+from group_messaging.compat import AUTH_USER_MODEL
 
 
 class Migration(SchemaMigration):
