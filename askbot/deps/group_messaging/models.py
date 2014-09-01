@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import signals
 from django.conf import settings as django_settings
 from django.contrib.auth.models import Group
-from askbot.compat import User
+from group_messaging.compat import User
 from django.contrib.sites.models import Site
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
