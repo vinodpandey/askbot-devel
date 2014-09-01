@@ -3,7 +3,7 @@ import time
 import urlparse
 from bs4 import BeautifulSoup
 from django.test import TestCase
-from askbot.compat import User, Group
+from group_messaging.compat import User, Group
 from group_messaging.models import Message
 from group_messaging.models import MessageMemo
 from group_messaging.models import SenderList
