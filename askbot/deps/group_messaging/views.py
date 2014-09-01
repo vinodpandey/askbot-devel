@@ -11,7 +11,7 @@ and turns them into complete views
 import copy
 import datetime
 from django.template.loader import get_template
-from askbot.compat import User
+from group_messaging.compat import User
 from django.db import models
 from django.forms import IntegerField
 from django.http import HttpResponse
