@@ -394,7 +394,7 @@ class AuthUserGroups(models.Model):
         unique_together = ('group', 'user')
         #change this to the custom user model
         #db_table = 'auth_user_groups'
-        db_table = 'django_social_auth_user_groups'
+        db_table = 'django_custom_auth_user_groups'
         managed = False
 
 
