@@ -160,3 +160,24 @@ askbot_templates
 - - templates
 
 
+Note:  
+1. while running in production mode, make sure memcached is up and running otherwise it will show errors regarding
+live settings and language code
+2. custom auth module name should be django_customm_auth only. This is hardcoded in https://github.com/vinodpandey/askbot-devel/blob/master/askbot/models/user.py
+Line 386
+class AuthUserGroups(models.Model):
+      """explicit model for the auth_user_groups bridge table.
+      """
+      group = models.ForeignKey(AuthGroup)
+      user = models.ForeignKey(User)
+      class Meta:
+      app_label = 'auth'
+      unique_together = ('group', 'user')
+      #change this to the custom user model
+      #db_table = 'auth_user_groups'
+      db_table = 'django_custom_auth_user_groups'
+      managed = False
+
+
+
+
