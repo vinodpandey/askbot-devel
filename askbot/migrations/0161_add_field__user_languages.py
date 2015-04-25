@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -11,13 +11,13 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Thread.language_code'
-        safe_add_column('auth_user', 'languages',
+        safe_add_column(auth_db_name, 'languages',
                           self.gf('django.db.models.fields.CharField')(default='en', max_length=128),
                           keep_default=False)
 
     def backwards(self, orm):
         # Deleting field 'Thread.junk'
-        db.delete_column('auth_user', 'languages')
+        db.delete_column(auth_db_name, 'languages')
 
     models = {
         'askbot.activity': {

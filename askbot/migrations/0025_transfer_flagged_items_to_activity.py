@@ -1,6 +1,6 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
 #from south.db import db
+from askbot.compat import AUTH_USER_MODEL
 from south.v2 import DataMigration
 from askbot.migrations_api.version1 import API
 from askbot import const

@@ -1,4 +1,4 @@
-from askbot.combat import AUTH_USER_MODEL
+from askbot.compat import AUTH_USER_MODEL
 from south.db import db
 from south.utils import ask_for_it_by_name
 from south.v2 import SchemaMigration

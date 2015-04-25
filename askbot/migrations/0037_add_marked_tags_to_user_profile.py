@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -11,16 +11,16 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'User.interesting_tags'
-        safe_add_column(u'auth_user', 'interesting_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
+        safe_add_column(auth_db_name, 'interesting_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
         # Adding field 'User.ignored_tags'
-        safe_add_column(u'auth_user', 'ignored_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
+        safe_add_column(auth_db_name, 'ignored_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
 
     def backwards(self, orm):
         
         # Deleting field 'User.interesting_tags'
-        db.delete_column('auth_user', 'interesting_tags')
+        db.delete_column(auth_db_name, 'interesting_tags')
         # Deleting field 'User.ignored_tags'
-        db.delete_column('auth_user', 'ignored_tags')
+        db.delete_column(auth_db_name, 'ignored_tags')
     
     
     models = {

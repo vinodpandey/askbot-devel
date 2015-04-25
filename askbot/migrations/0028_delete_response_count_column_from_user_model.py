@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -9,12 +9,12 @@ class Migration(SchemaMigration):
     
     def forwards(self, orm):
         # Adding fields
-        db.delete_column('auth_user', 'response_count')
+        db.delete_column(auth_db_name, 'response_count')
     
     
     def backwards(self, orm):
         # Deleting fields
-        db.add_column('auth_user', 'response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
+        db.add_column(auth_db_name, 'response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
     
     
     models = {

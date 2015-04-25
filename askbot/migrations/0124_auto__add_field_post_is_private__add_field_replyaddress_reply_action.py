@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -28,7 +28,7 @@ class Migration(SchemaMigration):
         try:
             db.start_transaction()
             # Adding field 'User.interesting_tags'
-            safe_add_column(u'auth_user', 'email_signature', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
+            safe_add_column(auth_db_name, 'email_signature', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
             db.commit_transaction()
         except:
             db.rollback_transaction()

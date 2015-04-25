@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration

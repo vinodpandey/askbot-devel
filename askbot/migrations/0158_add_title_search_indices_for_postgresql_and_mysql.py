@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import askbot
 import datetime
 import os

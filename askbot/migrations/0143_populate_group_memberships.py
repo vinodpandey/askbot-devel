@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import datetime
 from south.db import db
 from south.v2 import DataMigration
@@ -303,7 +303,7 @@ class Migration(DataMigration):
             'voted_post': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm['askbot.Post']"})
         },
         'auth.authusergroups': {
-            'Meta': {'unique_together': "(('group', 'user'),)", 'object_name': 'AuthUserGroups', 'db_table': "'auth_user_groups'", 'managed': 'False'},
+            'Meta': {'unique_together': "(('group', 'user'),)", 'object_name': 'AuthUserGroups', 'db_table': "'django_custom_auth_user_groups'", 'managed': 'False'},
             'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.Group']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})

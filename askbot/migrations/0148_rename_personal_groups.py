@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 """renaming personal groups from old format to new format
 old format: _internal_<username>_<user_id>
 new format: _personal_<user_id>

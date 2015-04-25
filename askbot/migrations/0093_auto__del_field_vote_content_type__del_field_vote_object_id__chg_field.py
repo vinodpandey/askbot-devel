@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'vote', 'object_id')
 
         # Changing field 'Vote.voted_post'
-        db.alter_column(u'vote', 'voted_post_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['askbot.Post']))
+        db.alter_column(u'vote', 'voted_post_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Post']))
 
         # Adding unique constraint on 'Vote', fields ['user', 'voted_post']
         db.create_unique(u'vote', ['user_id', 'voted_post_id'])

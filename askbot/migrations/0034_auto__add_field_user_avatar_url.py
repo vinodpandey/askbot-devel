@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -11,13 +11,13 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Tag.avatar_url'
-        safe_add_column(u'auth_user', 'has_custom_avatar', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
+        safe_add_column(auth_db_name, 'has_custom_avatar', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
     
     
     def backwards(self, orm):
         
         # Deleting field 'Tag.avatar_url'
-        db.delete_column(u'auth_user', 'has_custom_avatar')
+        db.delete_column(auth_db_name, 'has_custom_avatar')
     
     models = {
         'askbot.activity': {

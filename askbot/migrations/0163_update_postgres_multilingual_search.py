@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import sys
 import askbot
 from askbot.search.postgresql import setup_full_text_search

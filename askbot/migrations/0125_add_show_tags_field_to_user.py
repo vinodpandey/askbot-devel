@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
         
         # Adding model show_marked_tags fields to the model auth_user
         safe_add_column(
-            u'auth_user',
+            auth_db_name,
             'show_marked_tags',
             self.gf(
                 'django.db.models.fields.BooleanField'
@@ -24,7 +24,7 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         
         # Deleting show_marked_tags fields
-        db.delete_column(u'auth_user', 'show_marked_tags')
+        db.delete_column(auth_db_name, 'show_marked_tags')
     
     models = {
         'askbot.activity': {

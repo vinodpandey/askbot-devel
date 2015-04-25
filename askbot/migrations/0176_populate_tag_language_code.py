@@ -5,7 +5,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.conf import settings as django_settings
 from django.db import models
-from askbot.combat import AUTH_USER_MODEL
+from askbot.compat import AUTH_USER_MODEL
 
 class Migration(DataMigration):
 

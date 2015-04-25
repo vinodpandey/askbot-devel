@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -22,13 +22,13 @@ class Migration(SchemaMigration):
         db.delete_column('askbot_anonymousanswer', 'question_id')
 
         # Changing field 'AnonymousAnswer.question_post'
-        db.alter_column('askbot_anonymousanswer', 'question_post_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['askbot.Post']))
+        db.alter_column('askbot_anonymousanswer', 'question_post_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Post']))
 
         # Deleting field 'QuestionView.question'
         db.delete_column('askbot_questionview', 'question_id')
 
         # Changing field 'QuestionView.question_post'
-        db.alter_column('askbot_questionview', 'question_post_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['askbot.Post']))
+        db.alter_column('askbot_questionview', 'question_post_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Post']))
 
         # Deleting field 'PostRevision.question'
         db.delete_column('askbot_postrevision', 'question_id')

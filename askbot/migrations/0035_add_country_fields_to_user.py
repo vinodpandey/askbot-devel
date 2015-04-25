@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -11,15 +11,15 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding model country fields to the model auth_user
-        safe_add_column(u'auth_user', 'country', self.gf('django_countries.fields.CountryField')(max_length=2, blank=True, null=True))
-        safe_add_column(u'auth_user', 'show_country', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True))
+        safe_add_column(auth_db_name, 'country', self.gf('django_countries.fields.CountryField')(max_length=2, blank=True, null=True))
+        safe_add_column(auth_db_name, 'show_country', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True))
     
     
     def backwards(self, orm):
         
         # Deleting country fields
-        db.delete_column(u'auth_user', 'country')
-        db.delete_column(u'auth_user', 'show_country')
+        db.delete_column(auth_db_name, 'country')
+        db.delete_column(auth_db_name, 'show_country')
     
     
     models = {

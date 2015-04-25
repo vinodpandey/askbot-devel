@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
-# -*- coding: utf-8 -*-
+# encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -12,25 +12,25 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         """add fields twitter_access_token, twitter_handle, social_sharing_mode"""
         safe_add_column(
-            'auth_user',
+            auth_db_name,
             'twitter_access_token',
             self.gf('django.db.models.fields.CharField')(default='', max_length=256)
         )
         safe_add_column(
-            'auth_user',
+            auth_db_name,
             'twitter_handle',
             self.gf('django.db.models.fields.CharField')(default='', max_length=32)
         )
         safe_add_column(
-            'auth_user',
+            auth_db_name,
             'social_sharing_mode',
             self.gf('django.db.models.fields.IntegerField')(default=0)
         )
         
     def backwards(self, orm):
-        self.delete_column('auth_user', 'twitter_access_token')
-        self.delete_column('auth_user', 'twitter_handle')
-        self.delete_column('auth_user', 'social_sharing_mode')
+        self.delete_column(auth_db_name, 'twitter_access_token')
+        self.delete_column(auth_db_name, 'twitter_handle')
+        self.delete_column(auth_db_name, 'social_sharing_mode')
 
     models = {
         'askbot.activity': {

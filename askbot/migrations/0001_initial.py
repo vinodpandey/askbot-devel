@@ -1,5 +1,6 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
+
 import os
 import datetime
 from south.db import db
@@ -13,23 +14,23 @@ class Migration(SchemaMigration):
     
     def forwards(self, orm):
         #1) patch the existing auth_user table
-        safe_add_column('auth_user', 'website', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True, null=True), keep_default = False)
-        safe_add_column('auth_user', 'about', self.gf('django.db.models.fields.TextField')(blank=True, null=True), keep_default = False)
-        safe_add_column('auth_user', 'hide_ignored_questions', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default = False)
-        safe_add_column('auth_user', 'gold', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False)
-        safe_add_column('auth_user', 'email_isvalid', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default = False)
-        safe_add_column('auth_user', 'real_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True, null=True), keep_default = False)
-        safe_add_column('auth_user', 'location', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True, null=True), keep_default = False)
-        safe_add_column('auth_user', 'email_key', self.gf('django.db.models.fields.CharField')(max_length=32, null=True), keep_default = False)
-        safe_add_column('auth_user', 'date_of_birth', self.gf('django.db.models.fields.DateField')(null=True, blank=True), keep_default = False)
-        safe_add_column('auth_user', 'reputation', self.gf('django.db.models.fields.PositiveIntegerField')(default=1), keep_default = False)
-        safe_add_column('auth_user', 'gravatar', self.gf('django.db.models.fields.CharField')(max_length=32, null=True), keep_default = False)
-        safe_add_column('auth_user', 'bronze', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False)
-        safe_add_column('auth_user', 'tag_filter_setting', self.gf('django.db.models.fields.CharField')(default='ignored', max_length=16), keep_default = False)
-        safe_add_column('auth_user', 'last_seen', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now), keep_default = False)
-        safe_add_column('auth_user', 'silver', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False),
-        safe_add_column('auth_user', 'questions_per_page', self.gf('django.db.models.fields.SmallIntegerField')(default=10), keep_default = False),
-        safe_add_column('auth_user', 'response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
+        safe_add_column(auth_db_name, 'website', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'about', self.gf('django.db.models.fields.TextField')(blank=True, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'hide_ignored_questions', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default = False)
+        safe_add_column(auth_db_name, 'gold', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False)
+        safe_add_column(auth_db_name, 'email_isvalid', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default = False)
+        safe_add_column(auth_db_name, 'real_name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'location', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'email_key', self.gf('django.db.models.fields.CharField')(max_length=32, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'date_of_birth', self.gf('django.db.models.fields.DateField')(null=True, blank=True), keep_default = False)
+        safe_add_column(auth_db_name, 'reputation', self.gf('django.db.models.fields.PositiveIntegerField')(default=1), keep_default = False)
+        safe_add_column(auth_db_name, 'gravatar', self.gf('django.db.models.fields.CharField')(max_length=32, null=True), keep_default = False)
+        safe_add_column(auth_db_name, 'bronze', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False)
+        safe_add_column(auth_db_name, 'tag_filter_setting', self.gf('django.db.models.fields.CharField')(default='ignored', max_length=16), keep_default = False)
+        safe_add_column(auth_db_name, 'last_seen', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now), keep_default = False)
+        safe_add_column(auth_db_name, 'silver', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default = False),
+        safe_add_column(auth_db_name, 'questions_per_page', self.gf('django.db.models.fields.SmallIntegerField')(default=10), keep_default = False),
+        safe_add_column(auth_db_name, 'response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
 
         # Adding model 'Vote'
         if app_dir_name == 'forum':
@@ -728,23 +729,23 @@ class Migration(SchemaMigration):
             db.send_create_signal('askbot', ['BookAuthorRss'])
     
     def backwards(self, orm):
-        db.delete_column('auth_user', 'website')
-        db.delete_column('auth_user', 'about')
-        db.delete_column('auth_user', 'hide_ignored_questions')
-        db.delete_column('auth_user', 'gold')
-        db.delete_column('auth_user', 'email_isvalid')
-        db.delete_column('auth_user', 'real_name')
-        db.delete_column('auth_user', 'location')
-        db.delete_column('auth_user', 'email_key')
-        db.delete_column('auth_user', 'date_of_birth')
-        db.delete_column('auth_user', 'reputation')
-        db.delete_column('auth_user', 'gravatar')
-        db.delete_column('auth_user', 'bronze')
-        db.delete_column('auth_user', 'tag_filter_setting')
-        db.delete_column('auth_user', 'last_seen')
-        db.delete_column('auth_user', 'silver')
-        db.delete_column('auth_user', 'questions_per_page')
-        db.delete_column('auth_user', 'response_count')
+        db.delete_column(auth_db_name, 'website')
+        db.delete_column(auth_db_name, 'about')
+        db.delete_column(auth_db_name, 'hide_ignored_questions')
+        db.delete_column(auth_db_name, 'gold')
+        db.delete_column(auth_db_name, 'email_isvalid')
+        db.delete_column(auth_db_name, 'real_name')
+        db.delete_column(auth_db_name, 'location')
+        db.delete_column(auth_db_name, 'email_key')
+        db.delete_column(auth_db_name, 'date_of_birth')
+        db.delete_column(auth_db_name, 'reputation')
+        db.delete_column(auth_db_name, 'gravatar')
+        db.delete_column(auth_db_name, 'bronze')
+        db.delete_column(auth_db_name, 'tag_filter_setting')
+        db.delete_column(auth_db_name, 'last_seen')
+        db.delete_column(auth_db_name, 'silver')
+        db.delete_column(auth_db_name, 'questions_per_page')
+        db.delete_column(auth_db_name, 'response_count')
         
         if app_dir_name == 'forum':
             # Deleting model 'Vote'

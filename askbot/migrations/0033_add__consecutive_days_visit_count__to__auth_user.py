@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL, auth_db_name
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         
         # Adding field 'User.consecutive_days_visit_count'
         safe_add_column(
-                u'auth_user',
+                auth_db_name,
                 'consecutive_days_visit_count',
                 self.gf('django.db.models.fields.IntegerField')(default = 0, max_length = 2),
                 keep_default=False
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         
         # Deleting field 'User.consecutive_days_visit_count'
-        db.delete_column(u'auth_user', 'consecutive_days_visit_count')
+        db.delete_column(auth_db_name, 'consecutive_days_visit_count')
     
     
     models = {

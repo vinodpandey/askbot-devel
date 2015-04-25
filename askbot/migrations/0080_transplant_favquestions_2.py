@@ -1,5 +1,5 @@
-from askbot.combat import AUTH_USER_MODEL
 # encoding: utf-8
+from askbot.compat import AUTH_USER_MODEL
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'favorite_question', 'question_id')
 
         # Changing field 'FavoriteQuestion.thread'
-        db.alter_column(u'favorite_question', 'thread_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['askbot.Thread']))
+        db.alter_column(u'favorite_question', 'thread_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Thread']))
 
 
     def backwards(self, orm):

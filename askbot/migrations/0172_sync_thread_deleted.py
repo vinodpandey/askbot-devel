@@ -3,7 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
-from askbot.combat import AUTH_USER_MODEL
+from askbot.compat import AUTH_USER_MODEL
 
 class Migration(DataMigration):
 
@@ -358,7 +358,7 @@ class Migration(DataMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        uAUTH_USER_MODEL: {
+        AUTH_USER_MODEL: {
             'Meta': {'object_name': 'User'},
             'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'avatar_type': ('django.db.models.fields.CharField', [], {'default': "'n'", 'max_length': '1'}),

@@ -3,6 +3,7 @@ usage of this api implementation starts with migration 24
 """
 from askbot.migrations_api import BaseAPI
 from django.db import models
+from askbot.compat import AUTH_USER_MODEL
 #from django.contrib.contenttypes.models import ContentType
 
 class API(BaseAPI):
@@ -39,7 +40,7 @@ class API(BaseAPI):
         """return list of forum moderators and django site admins
         """
         filter_expression = models.Q(status='m') | models.Q(is_superuser=True)
-        return self.orm['auth.User'].objects.filter(filter_expression)
+        return self.orm[AUTH_USER_MODEL].objects.filter(filter_expression)
 
     def get_activity_items_for_object(self, instance):
         """get all activity items that have content_object set
