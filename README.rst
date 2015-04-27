@@ -43,84 +43,33 @@ Copyright Askbot S.p.A and the project contributors, 2010-2013.
 Askbot as App in existing project 
 =========================================
 
-1. install askbot
-git clone repo
-cd to apps directory in Mac
-git clone git://github.com/vinodpandey/askbot-devel.git
+1. install askbot  
+git clone git@github.com:vinodpandey/askbot-devel.git  
+cd askbot-devel  
+python setup.py install  
+pip uninstall coffin  
+pip install coffin==0.3.8  
 
-vagrant ssh
-cd /vagrant 
-source bin/activate
-cd code/apps/askbot-devel
-sudo /vagrant/bin/python setup.py install
-sudo /vagrant/bin/pip uninstall django-followit
-sudo /vagrant/bin/pip install -e git://github.com/vinodpandey/django-followit@v1.0#egg=followit
+python manage.py syncdb  
+python manage.py migrate askbot  
+python manage.py migrate robots  
+python manage.py migrate djcelery  
+python manage.py migrate group_messaging  
 
-update settings/base.py with askbot config and django-allauth askbot specific configuration
-update settings/dev.py with askbot specific configuration
-update DATABASES in settings/base.py to add MySQL specific 2 entries
-update urls.py to add askbot specific URLs
+If you already have a django site with users, after adding askbot to your project, run a management command just once:  
+
+python manage.py add_missing_subscriptions  
+
+
+python manage.py collectstatic  
+
+update settings/base.py with askbot config and django-allauth askbot specific configuration  
+update settings/dev.py with askbot specific configuration  
+update DATABASES in settings/base.py to add MySQL specific 2 entries  
+update urls.py to add askbot specific URLs  
 
 add TEMPATE_LOADERS as [] - if it is already not there in settings/base.py
 add PROJECT_ROOT to settings/base.py
-
-
->> askbot/models/user.py - near line 401 - class AuthUserGroups(models.Model): - db_table_name should be the name of custom_user table
-python manage.py syncdb
-python manage.py migrate
-python manage.py collectstatic
-
-check if django_custom_auth is updated or not. If not, them manually update the table using sql script to add missing columns.
-
-
-====
-
--- --------------------------------------------------------
-
---
--- Table structure for table `django_custom_auth_user`
---
-ALTER TABLE `django_custom_auth_user`
-ADD COLUMN   `status` varchar(2) NOT NULL,
-ADD COLUMN   `is_fake` tinyint(1) NOT NULL,
-ADD COLUMN   `email_isvalid` tinyint(1) NOT NULL,
-ADD COLUMN   `email_key` varchar(32) DEFAULT NULL,
-ADD COLUMN   `reputation` int(10) unsigned NOT NULL,
-ADD COLUMN   `gravatar` varchar(32) NOT NULL,
-ADD COLUMN  `avatar_type` varchar(1) NOT NULL,
-ADD COLUMN   `gold` smallint(6) NOT NULL,
-ADD COLUMN   `silver` smallint(6) NOT NULL,
-ADD COLUMN   `bronze` smallint(6) NOT NULL,
-ADD COLUMN   `questions_per_page` smallint(6) NOT NULL,
-ADD COLUMN   `last_seen` datetime NOT NULL,
-ADD COLUMN   `real_name` varchar(100) NOT NULL,
-ADD COLUMN   `website` varchar(200) NOT NULL,
-ADD COLUMN  `location` varchar(100) NOT NULL,
-ADD COLUMN   `country` varchar(2) NOT NULL,
-ADD COLUMN   `show_country` tinyint(1) NOT NULL,
-ADD COLUMN   `date_of_birth` date DEFAULT NULL,
-ADD COLUMN   `about` longtext NOT NULL,
-ADD COLUMN   `interesting_tags` longtext NOT NULL,
-ADD COLUMN   `ignored_tags` longtext NOT NULL,
-ADD COLUMN   `subscribed_tags` longtext NOT NULL,
-ADD COLUMN   `email_signature` longtext NOT NULL,
-ADD COLUMN   `show_marked_tags` tinyint(1) NOT NULL,
-ADD COLUMN   `email_tag_filter_strategy` smallint(6) NOT NULL,
-ADD COLUMN   `display_tag_filter_strategy` smallint(6) NOT NULL,
-ADD COLUMN   `new_response_count` int(11) NOT NULL,
-ADD COLUMN   `seen_response_count` int(11) NOT NULL,
-ADD COLUMN   `consecutive_days_visit_count` int(11) NOT NULL,
-ADD COLUMN   `languages` varchar(128) NOT NULL,
-ADD COLUMN   `twitter_access_token` varchar(256) NOT NULL,
-ADD COLUMN   `twitter_handle` varchar(32) NOT NULL,
-ADD COLUMN   `social_sharing_mode` int(11) NOT NULL;
-
-====
-
-
-
-python manage.py add_missing_subscriptions
-TransactionManagementError: Transaction managed block ended with pending COMMIT/ROLLBACK
 
 
 
