@@ -210,6 +210,23 @@ settings.py
 USE_TZ = False  
 LANGUAGE_CODE = 'en'  
 
+change TEMPLATE_LOADERS to []  
+change MIDDLEWARE_CLASSES to []  
+change TEMPLATE_CONTEXT_PROCESSORS as []  
+change INSTALLED_APPS as []  
+
+required apps for askbot  
+========================  
+'south',  
+
+#all of these are needed for the askbot  
+'django.contrib.admin',  
+'django.contrib.humanize',  
+'django.contrib.sitemaps',  
+'django.contrib.messages',  
+
+
+
 ############### using django-allauth with askbot #####################  
 
 LOGIN_URL = '/accounts/login/'  
