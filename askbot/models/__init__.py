@@ -2425,7 +2425,7 @@ def delete_messages(self):
 def user_get_profile_url(self, profile_section=None):
     """Returns the URL for this User's profile."""
     user_name = self.username
-    if self.username:
+    if not self.username:
         user_name = self.first_name
     url = reverse(
             'user_profile',
