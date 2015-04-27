@@ -2424,9 +2424,12 @@ def delete_messages(self):
 #todo: find where this is used and replace with get_absolute_url
 def user_get_profile_url(self, profile_section=None):
     """Returns the URL for this User's profile."""
+    user_name = self.username
+    if self.username:
+        user_name = self.first_name
     url = reverse(
             'user_profile',
-            kwargs={'id':self.id, 'slug':slugify(self.username)}
+            kwargs={'id':self.id, 'slug':slugify(user_name)}
         )
     if profile_section:
         url += "?sort=" + profile_section
