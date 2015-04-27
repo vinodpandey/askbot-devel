@@ -303,7 +303,7 @@ class Migration(DataMigration):
             'voted_post': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'votes'", 'to': "orm['askbot.Post']"})
         },
         'auth.authusergroups': {
-            'Meta': {'unique_together': "(('group', 'user'),)", 'object_name': 'AuthUserGroups', 'db_table': "'django_custom_auth_user_groups'", 'managed': 'False'},
+            'Meta': {'unique_together': "(('group', 'user'),)", 'object_name': 'AuthUserGroups', 'db_table': "'custom_auth_user_groups'", 'managed': 'False'},
             'group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.Group']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm[AUTH_USER_MODEL]"})
